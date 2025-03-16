@@ -1,8 +1,13 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Users, LayoutTemplate, Star, Award } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const CountingNumber = dynamic(() => import('./CountingNumber').then((mod) => mod.CountingNumber), {
+  ssr: false,
+});
 
 interface StatItemProps {
   icon: React.ElementType;
@@ -70,33 +75,6 @@ function StatItem({ icon: Icon, value, label, suffix = '', isInView }: StatItemP
       </motion.p>
     </div>
   );
-}
-
-function CountingNumber({ value, isInView }: { value: number; isInView: boolean }) {
-  const [displayValue, setDisplayValue] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    const duration = 2000; // 2 seconds
-    const steps = 60;
-    const stepDuration = duration / steps;
-    const increment = value / steps;
-    let currentStep = 0;
-
-    const timer = setInterval(() => {
-      currentStep += 1;
-      setDisplayValue(Math.min(Math.round(increment * currentStep), value));
-
-      if (currentStep >= steps) {
-        clearInterval(timer);
-      }
-    }, stepDuration);
-
-    return () => clearInterval(timer);
-  }, [value, isInView]);
-
-  return <>{displayValue}</>;
 }
 
 export function StatsBar() {

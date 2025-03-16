@@ -2,7 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
-import { FloatingMockup } from './FloatingMockup';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const FloatingMockup = dynamic(() => import('./FloatingMockup').then((mod) => mod.FloatingMockup), {
+  ssr: false,
+});
 
 export function Hero() {
   return (
@@ -44,22 +49,26 @@ export function Hero() {
               Build responsive, high-performance websites in record time.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg">
-                Browse Templates
-              </Button>
-              <Button
-                variant="secondary"
-                size="lg"
-                className="group relative overflow-hidden"
-              >
-                <span className="relative z-10">View Components</span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-[var(--nav-hover-start)] to-[var(--nav-hover-end)]"
-                  initial={{ x: '100%' }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                />
-              </Button>
+              <Link href="/templates">
+                <Button size="lg">
+                  Browse Templates
+                </Button>
+              </Link>
+              <Link href="/resources">
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className="group relative overflow-hidden"
+                >
+                  <span className="relative z-10">View Components</span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-[var(--nav-hover-start)] to-[var(--nav-hover-end)]"
+                    initial={{ x: '100%' }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  />
+                </Button>
+              </Link>
             </div>
           </motion.div>
 

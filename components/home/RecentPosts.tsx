@@ -103,9 +103,10 @@ function PostCard({ post, index }: PostCardProps) {
             <Calendar size={14} />
             <time dateTime={post.date}>
               {new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
                 month: 'short',
                 day: 'numeric',
-                year: 'numeric'
+                timeZone: 'UTC',
               })}
             </time>
           </div>
